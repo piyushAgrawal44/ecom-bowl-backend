@@ -16,6 +16,7 @@ const {
   getStoreProductsWishListQuery
 } = require('../../utils/queries');
 const { ROLES } = require('../../constants');
+const { cloudinaryUpload } = require('../../utils/cloudinaryUpload');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -217,7 +218,7 @@ router.post(
         return res.status(400).json({ error: 'This sku is already in use.' });
       }
 
-      const { imageUrl, imageKey } = await s3Upload(image);
+      const { imageUrl, imageKey } = await cloudinaryUpload(image);
 
       const product = new Product({
         sku,
